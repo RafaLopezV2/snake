@@ -10,32 +10,32 @@ import javax.swing.JPanel;
 //note: board does not change dynamically 
 //note: board shape and window aesthetics to be set
 //note: unification of colors not done
+/**
+ * BoardDrawing class
+ * @author rlpmu
+ * @version 1.0
+ */
 public class BoardDrawing extends JPanel {
-
-    /**
-     *
-     */
     int b = 0;
     int row = 8;
     int col = 8;
     ArrayList<Rectangle> cells;
-    //int player;
     int[] cellnos;
 
     BoardScreen bs;
-    //ArrayList<Portal> portals;
-    //ArrayList<Player> players;
 
+    /**
+     * BoardDrawing
+     * @param row
+     * @param col
+     * @param bs 
+     */
     public BoardDrawing(int row, int col, BoardScreen bs) {
         this.bs = bs;
 
         this.row = row;
         this.col = col;
-        //player = 0;
-        //bs.players = new ArrayList<Player>();
-        //for(int i = 1;i <= bs.returnMaxPlayers();i++)
-        //    bs.players.add(new Player(i));
-        //get and add player(s) names
+
 
         cells = new ArrayList<Rectangle>();
 
@@ -64,22 +64,15 @@ public class BoardDrawing extends JPanel {
         }
 
     }
-
+    /**
+     * paintComponent
+     * @param g 
+     */
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;//.create();
-
-        /*
-		int sw = getSize().width;
-		int sh = getSize().height;
-		int a = (int) (0.75*((sw > sh)?sh:sw));
-		
-		//Point start = new Point(0,0);
-		//Point end = new Point(100,100);
-		
-		g.drawLine(0,0,sw, sh);
-         */
-        //Create cells
+        Graphics2D g2d = (Graphics2D) g;
+ 
         int width = getWidth();
         int height = getHeight();
 
@@ -120,9 +113,6 @@ public class BoardDrawing extends JPanel {
 
             String message = "" + cellnos[i];
             g2d.drawString(message, (int) cell.getCenterX(), (int) cell.getCenterY());
-            //g2d.setColor(Color.red);
-
-            //draw player position
             for (int pl = 0; pl < bs.maxPlayers; pl++) {
                 if (bs.players.get(pl).getPosition() == cellnos[i]) {                         
                     changePlayerColor(g2d, pl, cell, cellWidth, cellHeight);
@@ -179,14 +169,11 @@ public class BoardDrawing extends JPanel {
         g2d.fillRect(cell.getLocation().x + pl * cellWidth / 4, cell.getLocation().y, cellWidth / 4, cellHeight / 4);//change to player position
         g2d.setColor(Color.blue);
     }
-
-    /*
-	public void ensurePlayerPosition(){
-		for(Portal port :portals){
-			if(player == port.returnStart())
-				player = port.returnEnd();
-		}
-	}
+    
+    /**
+     * ensurPlayerPosition
+     * @param pnos
+     * @return message
      */
     public String ensurePlayerPosition(int pnos) {
         String message = "";
@@ -202,11 +189,10 @@ public class BoardDrawing extends JPanel {
         }
         return message;
     }
-
-    /*
-	public void setPlayer(int a){
-		player = a;
-	}
+    /**
+     * setPlayer
+     * @param a
+     * @param pnos 
      */
     public void setPlayer(int a, int pnos) {
         bs.players.get(pnos).incPosition(a);
